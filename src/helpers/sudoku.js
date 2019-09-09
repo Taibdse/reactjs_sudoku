@@ -5,8 +5,18 @@ function generateGame(){
     let solution = sudoku.solvepuzzle(puzzle);
     const difficulty = sudoku.ratepuzzle(puzzle, 4);
 
-    puzzle = puzzle.map((item, index) => ({ isReadonly: (item !== null) ? true : false, value: item, index }))
-    solution = solution.map((item, index) => ({ isReadonly: true, value: item, index, filled: true }))
+    puzzle = puzzle.map((item, index) => ({ 
+        isReadonly: (item !== null) ? true : false, 
+        value: item === null ? null : item + 1, 
+        index 
+    }));
+
+    solution = solution.map((item, index) => ({ 
+        isReadonly: true, 
+        value: item + 1,  
+        index, 
+    }));
+
     return { puzzle, solution };
 }
 

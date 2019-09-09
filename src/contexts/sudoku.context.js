@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { generateGame, checkWinGame, checkCompletion } from '../helpers/sudoku';
 import { isNumberInRange, isEmpty } from '../helpers/validation';
+import Swal from 'sweetalert2';
 
 export const SudokuContext = React.createContext();
-
-let sudokuTimerInterval
 
 export const SudokuProvider = (props) => {
     const [sudoku, setSudoku] = useState({});
     const [isWinGame, setIsWinGame] = useState(false);
     const [startTime, setStartTime] = useState(new Date());
-    const [timer, setTimer] = useState(0);
-
+    const [isUsedSolution, setIsUsedSolution] = useState(false);
+    
     useEffect(() => {
         newGame();
     }, []);
@@ -32,28 +31,29 @@ export const SudokuProvider = (props) => {
     }
 
     const newGame = () => {
-        clearInterval(sudokuTimerInterval);
         const newSudoku = generateGame();
-        setSudoku(newSudoku);
         setIsWinGame(false);
+        setIsUsedSolution(false);
+        setSudoku(newSudoku);
         setStartTime(new Date());
-        setTimer(0);
-        sudokuTimerInterval = window.setInterval(() => {
-            const seconds = Math.round((Date.now() - startTime.getTime())/1000);
-            setTimer(seconds);
-        }, 1000);
     }
 
     const solveGame = () => {
-        if(!isWinGame){
-            clearInterval(sudokuTimerInterval);
+        if(!isWinGame && !isUsedSolution){
             sudoku.puzzle = sudoku.solution.map(item => item);
             setSudoku({ ...sudoku });
-            alert('SEEMS THIS GAME VERY HARD FOR YOU!');
+            setIsUsedSolution(true);
+            Swal.fire({
+                title: 'Seems this round is a bit hard for you!!',
+                toast: true,
+                position: 'top-right',
+                timer: 3500,
+                showCloseButton: false
+            })
         }
     }
 
-    const states = { sudoku, isWinGame, timer };
+    const states = { sudoku, isWinGame, startTime, isUsedSolution };
     const methods = { changeSudoku, solveGame, newGame };
 
     return (

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
 import Layout from '../components/layout';
 import Board from '../components/board';
 import SudokuControls from '../components/controls';
@@ -11,9 +10,18 @@ const IndexPage = () => {
     const sudokuContext = useContext(SudokuContext);
     const { isWinGame } = sudokuContext;
 
+   
+
     useEffect(() => {
         if(isWinGame){
-            alert('YOU WIN GAME, CONGRATULATION!!');
+            Swal.fire({
+                type: 'success',
+                title: 'You have won this round, congratulation!!',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3500
+            })
         }
     }, [isWinGame]);
 
@@ -25,7 +33,5 @@ const IndexPage = () => {
         </Layout>
     );
 };
-
-IndexPage.propTypes = {};
 
 export default IndexPage;
