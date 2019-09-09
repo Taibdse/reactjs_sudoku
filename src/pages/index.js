@@ -6,11 +6,12 @@ import { SudokuContext } from '../contexts/sudoku.context';
 import Timer from '../components/timer';
 import Swal from 'sweetalert2';
 
-const IndexPage = () => {
+const IndexPage = (props) => {
     const sudokuContext = useContext(SudokuContext);
-    const { isWinGame } = sudokuContext;
-
-   
+    const { isWinGame, newGame } = sudokuContext;
+    
+    
+    
 
     useEffect(() => {
         if(isWinGame){
@@ -24,6 +25,14 @@ const IndexPage = () => {
             })
         }
     }, [isWinGame]);
+
+    useEffect(() => {
+        newGame();
+
+        return () => {
+            window.clearInterval(window.sudokuTimerInterval);
+        }
+    }, []);
 
     return (
         <Layout>

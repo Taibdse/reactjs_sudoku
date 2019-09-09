@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { generateGame, checkWinGame, checkCompletion } from '../helpers/sudoku';
 import { isNumberInRange, isEmpty } from '../helpers/validation';
 import Swal from 'sweetalert2';
@@ -11,23 +11,20 @@ export const SudokuProvider = (props) => {
     const [startTime, setStartTime] = useState(new Date());
     const [isUsedSolution, setIsUsedSolution] = useState(false);
     
-    useEffect(() => {
-        newGame();
-    }, []);
-
     const changeSudoku = (index, value) => {
         let val = sudoku.puzzle[index].value;
         if(isEmpty(value)) val = null;
         if(isNumberInRange(value, 1, 9)) val = Number(value);
         sudoku.puzzle[index].value = val;
         setSudoku({ ...sudoku });
-        setIsWinGame(checkWinGame(sudoku.puzzle, sudoku.solution));
+        
         const winGame = checkWinGame(sudoku.puzzle, sudoku.solution);
         const complete = checkCompletion(sudoku.puzzle);
-        if(!winGame && complete){
-            alert('YOU GOT SOME ERRORS!!, PLEASE CHECK AGAIN');
-        }
+        console.log(winGame, complete);
         setIsWinGame(winGame);
+        if(winGame){
+            window.clearInterval(window.sudokuTimerInterval);
+        } 
     }
 
     const newGame = () => {

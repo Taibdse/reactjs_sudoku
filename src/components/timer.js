@@ -1,9 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SudokuContext } from '../contexts/sudoku.context';
 import { getTimeStringFromSeconds } from '../helpers/timer';
-import { isEmpty } from '../helpers/validation';
-
-let sudokuTimerInterval = null;
 
 const Timer = () => {
     const sudokuContext = useContext(SudokuContext);
@@ -11,8 +8,8 @@ const Timer = () => {
     const [timer, setTimer] = useState(0);
 
     useEffect(() => {     
-        window.clearInterval(sudokuTimerInterval);
-        sudokuTimerInterval = window.setInterval(() => {
+        window.clearInterval(window.sudokuTimerInterval);
+        window.sudokuTimerInterval = window.setInterval(() => {
             let seconds = Math.round((Date.now() - startTime.getTime())/ 1000);
             setTimer(seconds);
         }, 1000); 
@@ -20,7 +17,7 @@ const Timer = () => {
     }, [startTime]);
 
     useEffect(() => {
-        if(isWinGame || isUsedSolution) window.clearInterval(sudokuTimerInterval);
+        if(isWinGame || isUsedSolution) window.clearInterval(window.sudokuTimerInterval);
     }, [isWinGame, isUsedSolution]);
 
     return (

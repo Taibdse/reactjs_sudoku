@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Navbar from './navbar';
 
 const Layout = (props) => {
@@ -12,7 +11,5 @@ const Layout = (props) => {
         </div>
     );
 };
-
-Layout.propTypes = {};
 
 export default Layout;

@@ -1,5 +1,4 @@
 import React from 'react';
-// import "antd/dist/antd.css";
 import './assets/bootstrap.min.css';
 import '@sweetalert2/theme-borderless/borderless.min.css';
 import './App.css';
@@ -7,6 +6,8 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import GlobalContext from './contexts';
 import IndexPage from './pages';
 import AboutPage from './pages/about';
+
+window.sudokuTimerInterval = null;
 
 function App() {
   return (

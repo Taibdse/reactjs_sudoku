@@ -1,4 +1,6 @@
-/* @import '~@sweetalert2/theme-borderless/borderless.scss'; */
+.content-wrapper{
+  margin-bottom: 100px;
+}
 
 .sudoku{
   width: 450px;
@@ -9,7 +11,7 @@
 }
 
 
-.sudoku  .game-col{
+.sudoku .game-col{
   width: 50px;
   height: 50px;
   border: 1px solid #ccc;
@@ -26,12 +28,18 @@
   font-size: 1.4em;
 }
 
+.sudoku .game-col.available > input{
+  color: red;
+}
+
 .sudoku .game-col > input:focus, 
 .sudoku .game-col > input:active{
   outline: none;
   border: none;
  
 }
+
+
 
 .game-col.left-border{
   border-left: 4px solid #ccc;
